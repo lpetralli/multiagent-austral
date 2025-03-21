@@ -23,7 +23,7 @@ mail_agent = create_react_agent(
 workflow = create_supervisor(
     [employee_agent, mail_agent],
     model=model,
-    output_mode="last_message", # "full_history"
+    output_mode="full_history", # "last_message"
     prompt=(
         "You are a team supervisor managing a employee agent and a mail agent. "
         "For employee learning status records, use employee_agent. "
