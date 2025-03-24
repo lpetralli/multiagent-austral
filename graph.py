@@ -31,7 +31,7 @@ async def make_graph():
 
         mail_agent = create_react_agent(
             model=model,
-            tools=[create_one_mail_draft] + mcp_tools,
+            tools= mcp_tools,
             name="mail_agent",
             prompt="You are a mail agent responsible for creating mail drafts. You have access to tools that can create mail drafts and other utility tools. Always use one tool at a time and only when necessary. You can't create more than one mail draft at a time."
         )
