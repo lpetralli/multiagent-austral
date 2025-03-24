@@ -40,7 +40,7 @@ async def make_graph():
         workflow = create_supervisor(
             [employee_agent, mail_agent],
             model=model,
-            output_mode="full_history",  # "last_message"
+            output_mode="last_message",  # "full_history"
             prompt=(
                 "You are a team supervisor managing an employee agent and a mail agent. "
                 "For employee learning status records, use employee_agent. "
