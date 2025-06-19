@@ -3,8 +3,17 @@ from agent import Agent
 from langchain_core.messages import HumanMessage, AIMessage
 agent = Agent()
 
+# Add the image at the bottom, centered
+image_path = "Universidad Austral Logo.png"
+
+left_co, cent_co,last_co = st.columns(3)
+with cent_co:
+    st.image(image_path, use_container_width=True)
+
+st.markdown("---") # Optional: adds a horizontal rule above the image
+
 # Main Streamlit app
-st.title("Agent Chat Bot")
+#st.title("👨‍🎓 Agente de la Universidad Austral")
 
 # Initialize chat history
 if "messages" not in st.session_state:
