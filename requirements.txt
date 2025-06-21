@@ -1,5 +1,7 @@
 langchain-core
 langchain-openai
+langchain-google-genai
 langgraph
 langgraph-sdk
 langgraph-supervisor
+python-dotenv

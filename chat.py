@@ -1,6 +1,11 @@
 import streamlit as st
+from dotenv import load_dotenv
 from agent import Agent
 from langchain_core.messages import HumanMessage, AIMessage
+
+# Load environment variables
+load_dotenv()
+
 agent = Agent()
 
 # Add the image at the bottom, centered
