@@ -5,3 +5,4 @@ langgraph
 langgraph-sdk
 langgraph-supervisor
 python-dotenv
+streamlit
