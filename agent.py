@@ -1,23 +1,13 @@
 # agent.py
-import os
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langgraph_supervisor import create_supervisor
 from langgraph.prebuilt import create_react_agent
 from datetime import datetime
 
 class Agent:
-    def __init__(self, model_name="gemini-2.0-flash"):
-        """Initialize the agent with Google Gemini model."""
-        # Get API key from environment variable
-        api_key = os.getenv("GOOGLE_API_KEY")
-        if not api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable not set")
-        
-        self.model = ChatGoogleGenerativeAI(
-            model=model_name,
-            temperature=0,
-            google_api_key=api_key
-        )
+    def __init__(self, model_name="gpt-4.1"):
+        """Initialize the agent with OpenAI API key and model name."""
+        self.model = ChatOpenAI(model=model_name)
         self.graph = None
         self._initialize_workflow()
         
