@@ -2,7 +2,7 @@ import requests
 from langchain_core.tools import tool
 from typing import Dict, Any
 from pydantic import BaseModel
-from typing import Literal, List
+from typing import Literal, List, Optional
 
 
 class EmployeeLearningStatus(BaseModel):
@@ -134,7 +134,7 @@ class SIUTema(BaseModel):
     materia: str
     horas: str
     fecha: str
-    temaDictado: str
+    temaDictado: Optional[str] = None
 
 class EventoAcademico(BaseModel):
     profesor: str
@@ -148,22 +148,27 @@ def subir_tema_siu(
     materia: str,
     horas: str,
     fecha: str,
-    temaDictado: str
+    temaDictado: Optional[str] = None
 ) -> Dict[Any, Any]:
     """
     Automatiza la carga de clases dictadas en la materia de IA usando Webhooks, Google Sheets y
     filtros inteligentes que validan su existencia en el temario, ahorrando tiempo y evitando errores.
+    
+    IMPORTANTE: El tema dictado puede ser diferente al tema planificado en el cronograma/Syllabus.
+    Es normal que el profesor ajuste el contenido según las necesidades de la clase.
+    El campo temaDictado es OPCIONAL y puede omitirse si no se especifica.
     
     Args:
         nombreProfesor: Nombre del profesor
         materia: Nombre de la materia
         horas: Número de horas
         fecha: Fecha de la clase
-        temaDictado: Tema dictado
+        temaDictado: (OPCIONAL) Tema que se dictó en la clase. Puede ser diferente al tema planificado.
+                     Si no se proporciona, se omitirá este campo.
         
     Returns:
-        - "Clase del [fecha] cargada correctamente": cuando los datos del cronograma/Syllabus coinciden con el pedido que hace el profesor.
-        - "Error en los datos": cuando los datos del cronograma/Syllabus NO coinciden con el pedido del profesor.
+        - "Clase del [fecha] cargada correctamente": cuando los datos se procesan exitosamente.
+        - Mensaje de respuesta del sistema con el resultado del procesamiento.
         
     Raises:
         Exception: If the request fails
