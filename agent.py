@@ -82,7 +82,7 @@ class Agent:
         - gestionar_recordatorio_examen: Send exam reminders or check exam dates for courses
         
         PROFESSOR AGENT TOOLS:
-        - subir_tema_siu: Upload class topics to SIU system (validates against syllabus)
+        - subir_tema_siu: Upload class topics to SIU system (validates against syllabus - NO NEED TO ASK FOR THE TOPIC)
         - crear_recordatorio_evento: Create academic event reminders for students in AI and Big Data courses
         - gestionar_archivo_materia: Manage course files (upload, hide, show, or delete files in virtual campus)
         

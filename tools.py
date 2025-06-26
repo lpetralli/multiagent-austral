@@ -2,7 +2,7 @@ import requests
 from langchain_core.tools import tool
 from typing import Dict, Any
 from pydantic import BaseModel
-from typing import Literal, List, Optional
+from typing import Literal, List
 
 
 class EmployeeLearningStatus(BaseModel):
@@ -134,7 +134,6 @@ class SIUTema(BaseModel):
     materia: str
     horas: str
     fecha: str
-    temaDictado: Optional[str] = None
 
 class EventoAcademico(BaseModel):
     profesor: str
@@ -147,24 +146,17 @@ def subir_tema_siu(
     nombreProfesor: str,
     materia: str,
     horas: str,
-    fecha: str,
-    temaDictado: Optional[str] = None
+    fecha: str
 ) -> Dict[Any, Any]:
     """
     Automatiza la carga de clases dictadas en la materia de IA usando Webhooks, Google Sheets y
-    filtros inteligentes que validan su existencia en el temario, ahorrando tiempo y evitando errores.
-    
-    IMPORTANTE: El tema dictado puede ser diferente al tema planificado en el cronograma/Syllabus.
-    Es normal que el profesor ajuste el contenido según las necesidades de la clase.
-    El campo temaDictado es OPCIONAL y puede omitirse si no se especifica.
+    filtros inteligentes, ahorrando tiempo y evitando errores.
     
     Args:
         nombreProfesor: Nombre del profesor
         materia: Nombre de la materia
         horas: Número de horas
-        fecha: Fecha de la clase
-        temaDictado: (OPCIONAL) Tema que se dictó en la clase. Puede ser diferente al tema planificado.
-                     Si no se proporciona, se omitirá este campo.
+        fecha: Fecha de la clase en formato día/mes (ej: "13/06" para el 13 de junio)
         
     Returns:
         - "Clase del [fecha] cargada correctamente": cuando los datos se procesan exitosamente.
@@ -178,11 +170,10 @@ def subir_tema_siu(
     try:
         # Validate data with Pydantic model
         payload = SIUTema(
-            nombreProfesor=nombreProfesor,
+            nombreProfesor=nombreProfesor[0].upper() + nombreProfesor[1:] if nombreProfesor else "",
             materia=materia,
             horas=horas,
-            fecha=fecha,
-            temaDictado=temaDictado
+            fecha=fecha
         )
 
         response = requests.post(
